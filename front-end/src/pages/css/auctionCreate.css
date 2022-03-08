@@ -1,0 +1,18 @@
+div.content{
+    width: 500px;
+    margin:auto;
+    padding-top:50px;
+    padding-bottom:50px;
+}
+.content .img{
+    text-align:center;
+    padding-bottom: 50px;
+}
+.content img{
+    width: 500px;
+}
+div.is-disabled
+{
+  pointer-events: none;
+  opacity: 0.7;
+}

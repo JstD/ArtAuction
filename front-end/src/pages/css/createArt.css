@@ -1,0 +1,10 @@
+.my-form{
+    width:550px;
+    margin:auto;
+    padding: 20px
+}
+div.is-disabled
+{
+  pointer-events: none;
+  opacity: 0.7;
+}

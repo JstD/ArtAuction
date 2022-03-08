@@ -1,0 +1,54 @@
+version: "3"
+services:
+  mongodb:
+    container_name: mongodb2
+    image: mongo:4.4.6
+    ports:
+      - "27017:27017"
+    
+  listener:
+    container_name: listerner-node-art-auction
+    image: jstd/listerner-node-art-auction:latest
+    build:
+      context: ./Contracts
+      dockerfile: Dockerfile
+
+    ports:
+      - "12345:12345"
+    volumes:
+      - ./Contracts:/auction/Contracts
+      - /auction/Contracts/listener/node_modules
+      - /auction/Contracts/node_modules
+    depends_on:
+      - mongodb
+
+  back-end:
+    container_name: server-node-art-auction
+    image: jstd/server-node-art-auction:latest
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./back-end:/auction/back-end
+      - /auction/back-end/node_modules
+    depends_on:
+      - mongodb
+    
+  front-end:
+    stdin_open: true
+    tty: true
+    container_name: client-react-art-auction
+    image: jstd/client-react-art-auction:latest
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front-end:/auction/front-end
+      - /auction/front-end/node_modules
+    depends_on:
+      - back-end
